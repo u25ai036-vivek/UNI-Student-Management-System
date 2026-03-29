@@ -9,7 +9,7 @@ import java.sql.SQLException;
 
 
 
-public class MySqlDemo 
+public class MySqlDemo //test
 {
 
 	public static void main(String[] args) 
