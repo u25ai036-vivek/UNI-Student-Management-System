@@ -151,7 +151,8 @@ public class Student {
 
         Student s = importFromDatabase("u25ai058");
 
-        if (s != null) {
+        if (s != null) 
+        {
             s.display();
         }
     }
