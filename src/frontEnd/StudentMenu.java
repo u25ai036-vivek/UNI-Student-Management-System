@@ -1,6 +1,8 @@
 package frontEnd;
 
 import java.util.Scanner;
+import dao.StudentDAO;
+import Backend.Student;
 
 public class StudentMenu {
 	public static void show() {
@@ -50,6 +52,24 @@ public class StudentMenu {
     
 }
 
+	
+	    public static void viewProfile() 
+	    {
 
+	        Scanner sc = new Scanner(System.in);
+
+	        System.out.print("Enter Student ID: ");
+	        String sid = sc.nextLine();
+
+	        //  Call JDBC method
+	        Student s = StudentDAO.getStudentProfile(sid);
+
+	        //  Display
+	        if (s != null) {
+	            s.display();
+	        } else {
+	            System.out.println("Profile not found!");
+	        }
+	    }
 
 }

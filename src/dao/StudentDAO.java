@@ -1,6 +1,6 @@
 package dao;
 
-import java.sql.*;//jkl
+import java.sql.*;
 import Backend.Student;
 
 public class StudentDAO {
@@ -15,12 +15,12 @@ public class StudentDAO {
         try (Connection con = DriverManager.getConnection(url, "root", "root");
              PreparedStatement ps = con.prepareStatement(query)) {
 
-            // 🔹 Set SID
+            //  Set SID
             ps.setString(1, sid);
 
             ResultSet rs = ps.executeQuery();
 
-            // 🔹 If student exists
+            //  If student exists
             if (rs.next()) {
 
                 s = new Student(
@@ -39,7 +39,7 @@ public class StudentDAO {
                 );
 
             } else {
-                System.out.println("❌ No student found with this ID");
+                System.out.println(" No student found with this ID");
             }
 
         } catch (SQLException e) {
