@@ -1,4 +1,4 @@
-package backend/Backend;
+package backend;
 
 import java.sql.*;
 

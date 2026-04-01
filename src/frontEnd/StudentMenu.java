@@ -1,8 +1,9 @@
 package frontEnd;
 
 import java.util.Scanner;
+
 import dao.StudentDAO;
-import Backend.Student;
+import src1.backend.Student;
 
 public class StudentMenu {
 	public static void show() {
@@ -25,6 +26,7 @@ public class StudentMenu {
                 case 1:
                     // call JDBC method
                     System.out.println("Displaying profile...");
+                    viewProfile();
                     break;
                 case 2:
                     System.out.println("Displaying Available Courses...");
@@ -70,6 +72,10 @@ public class StudentMenu {
 	        } else {
 	            System.out.println("Profile not found!");
 	        }
+	    }
+	    
+	    public static void main(String[] args) {
+	        show();
 	    }
 
 }

@@ -1,7 +1,7 @@
 package dao;
 
 import java.sql.*;
-import Backend.Student;
+import src1.backend.Student;
 
 public class StudentDAO {
 
