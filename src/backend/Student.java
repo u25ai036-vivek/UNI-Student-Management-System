@@ -2,7 +2,7 @@ package backend;
 
 import java.sql.*;
 
-public class Student {
+public class Student {//just wait
 
     private String sid;
     private String name;
