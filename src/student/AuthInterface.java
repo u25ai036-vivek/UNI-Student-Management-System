@@ -1,5 +1,6 @@
 package student;
 
+
 public interface AuthInterface 
 {
 	boolean login(String email, String password);
