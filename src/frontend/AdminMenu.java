@@ -19,10 +19,12 @@ public class AdminMenu {
 
             switch (choice) {
                 case 1:
-                    int edit_choice=sc.nextInt();
+                    
                     System.out.println("1.View Courses");
                     System.out.println("2.Add Courses");
                     System.out.println("3.Delete Courses");
+                    
+                    int edit_choice=sc.nextInt();
                     
                     switch(edit_choice)
                     {

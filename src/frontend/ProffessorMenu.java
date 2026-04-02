@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class ProffessorMenu {
 	
-	    public static void show() {
+	    public static void main(String args[]) {
 	        Scanner sc = new Scanner(System.in);
 
 	        System.out.println("\n--- Select Department ---");
