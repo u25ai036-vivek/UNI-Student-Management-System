@@ -6,7 +6,7 @@ import java.sql.DriverManager;
 import java.sql.Statement;
 import java.util.Scanner;
 
-import frontend.*;
+import frontEnd.*;
 
 import java.sql.*;
 import java.util.Scanner;
