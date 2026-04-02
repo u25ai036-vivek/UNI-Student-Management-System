@@ -7,7 +7,7 @@ import java.sql.*;
 import java.sql.Date;
 
 
-public interface StudentService {
+public class StudentService implements StOperations {
 
 	public static void viewAvailableCourses() {
 		
