@@ -3,7 +3,13 @@ import java.util.*;
 
 import admin.AdminOperations;
 import admin.AdminService;
+import admin.Admin;
 import proffesor.ProfOperations;
+import proffesor.ProfService;
+import proffesor.Professor;
+import student.StudentService;
+import student.Student;
+//import student.StOperations;
 
 public class MIS {
 	/*public static void main(String[] args)
@@ -13,16 +19,16 @@ public class MIS {
 	
 	 
 	
-	/*static /Scanner sc = new Scanner(System.in);
+	
 
     static StudentService studentService = new StudentService();
-    static ProfessorService professorService = new ProfessorService();
-    static AdminService adminService = new AdminService();*/
+    static ProfService professorService = new ProfService();
+    static AdminService adminService = new AdminService();
 
     public static void main(String[] args) 
     {
-
-    	/*Scanner sc=new Scanner(System.in);
+    	Scanner sc=new Scanner(System.in);
+    	
         while (true) {
             displayMainMenu();
             int choice = sc.nextInt();
@@ -38,10 +44,10 @@ public class MIS {
                     System.out.println("Invalid choice");
             }
         }
-    }*/
     }
+    
 
-    /*static void displayMainMenu() {
+    static void displayMainMenu() {
         System.out.println("\n===== MIS SYSTEM =====");
         System.out.println("1. Enter Application");
         System.out.println("2. Exit");
@@ -49,6 +55,8 @@ public class MIS {
     }
 
     static void handleLogin() {
+    	
+    	Scanner sc=new Scanner(System.in);
 
         System.out.println("\nLogin as:");
         System.out.println("1. Student");
@@ -97,20 +105,23 @@ public class MIS {
         }
     }
 
+
     static void handleStudentMenu() {
 
-        while (true) {
-            System.out.println("\n===== Student Menu =====");
-            System.out.println("1. View Courses");
-            System.out.println("2. Register Course");
-            System.out.println("3. Drop Course");
-            System.out.println("4. View Schedule");
-            System.out.println("5. View SGPA/CGPA");
-            System.out.println("6. Submit Complaint");
-            System.out.println("7. View Complaint Status");
-            System.out.println("8. Logout");
+//        while (true) {
+//            System.out.println("\n===== Student Menu =====");
+//            System.out.println("1. View Courses");
+//            System.out.println("2. Register Course");
+//            System.out.println("3. Drop Course");
+//            System.out.println("4. View Schedule");
+//            System.out.println("5. View SGPA/CGPA");
+//            System.out.println("6. Submit Complaint");
+//            System.out.println("7. View Complaint Status");
+//            System.out.println("8. Logout");
+//        }
+    }
 
-            int ch = sc.nextInt();
+            /*int ch = sc.nextInt();
 
             switch (ch) {
                 case 1:
@@ -141,38 +152,10 @@ public class MIS {
                     System.out.println("Invalid choice");
             }
         }
-    }
+        */
 
-    static void handleProfessorMenu() {
 
-        while (true) {
-            System.out.println("\n===== Professor Menu =====");
-            System.out.println("1. View Courses");
-            System.out.println("2. Modify Course");
-            System.out.println("3. View Enrolled Students");
-            System.out.println("4. Logout");
-
-            int ch = sc.nextInt();
-
-            switch (ch) {
-                case 1:
-                    professorService.listAssignedCourses();
-                    break;
-                case 2:
-                    professorService.modifyCourseDetails();
-                    break;
-                case 3:
-                    professorService.listEnrolledStudents();
-                    break;
-                case 4:
-                    return;
-                default:
-                    System.out.println("Invalid choice");
-            }
-        }
-    }
-	*/
-    
+        
     public static void handleProfessorMenu() {
 
         Scanner sc = new Scanner(System.in);

@@ -11,7 +11,6 @@ public class Professor implements AuthInterface {
     public void logout() {}
 	@Override
 	public boolean login(String dept, String email, String password) {
-		// TODO Auto-generated method stub
 		String url = "jdbc:mysql://localhost:3306/your_db";
 	    String user = "root";
 	    String pass = "mayank09";
