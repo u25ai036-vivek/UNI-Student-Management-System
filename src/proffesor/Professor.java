@@ -11,7 +11,7 @@ public class Professor implements AuthInterface {
     public void logout() {}
 	@Override
 	public boolean login(String dept, String email, String password) {
-		String url = "jdbc:mysql://localhost:3306/"+dpt;
+		String url = "jdbc:mysql://localhost:3306/"+dept;
 	    String user = "root";
 	    String pass = "mayank09";
 	    dpt=dept;
