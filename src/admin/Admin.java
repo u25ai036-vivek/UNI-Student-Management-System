@@ -4,9 +4,9 @@ import student.AuthInterface;
 
 public class Admin implements AuthInterface {
 
-    public boolean login(String email, String password) {
+    public boolean login(String id, String password) {
 
-        if (email.equals("a") && password.equals("b")) {
+        if (id.equals("a") && password.equals("b")) {
             System.out.println("Admin login successful");
             return true;
         } else {

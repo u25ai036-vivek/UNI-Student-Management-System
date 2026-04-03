@@ -782,5 +782,80 @@ public class StudentService implements StOperations
             System.out.println(e.getMessage());
         }
     }
+    
+    public void changePassword() {
+    	
+    	String url = "jdbc:mysql://localhost:3306/"+Professor.dpt;
+        String user = "root";
+        String pass = "mayank09";
+		Scanner sc=new Scanner(System.in);
+
+        try {
+            Connection con = DriverManager.getConnection(url, user, pass);
+
+            String sid = Student.currentStudentId;
+
+            System.out.print("Enter Old Password: ");
+            String oldPass = sc.nextLine();
+
+        
+            String check = "SELECT password FROM Students WHERE sid=?";
+            PreparedStatement ps1 = con.prepareStatement(check);
+            ps1.setString(1, sid);
+
+            ResultSet rs = ps1.executeQuery();
+
+            if (!rs.next()) {
+                System.out.println("Student not found");
+                return;
+            }
+
+            String actualPass = rs.getString("password");
+
+            if (!actualPass.equals(oldPass)) {
+                System.out.println("Incorrect old password");
+                return;
+            }
+
+           
+            System.out.print("Enter New Password: ");
+            String newPass = sc.nextLine();
+
+            System.out.print("Confirm New Password: ");
+            String confirmPass = sc.nextLine();
+
+         
+            if (newPass.equals(oldPass)) {
+                System.out.println("New password cannot be same as old password");
+                return;
+            }
+
+            if (!newPass.equals(confirmPass)) {
+                System.out.println("Passwords do not match");
+                return;
+            }
+
+            if (newPass.length() < 6) {
+                System.out.println("Password must be at least 6 characters");
+                return;
+            }
+
+      
+            String update = "UPDATE Students SET password=? WHERE sid=?";
+            PreparedStatement ps2 = con.prepareStatement(update);
+
+            ps2.setString(1, newPass);
+            ps2.setString(2, sid);
+
+            ps2.executeUpdate();
+
+            System.out.println("Password updated successfully");
+
+            con.close();
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
 
 }

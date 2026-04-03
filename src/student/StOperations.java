@@ -25,5 +25,8 @@ public interface StOperations {
 
     static void viewComplaints() {
 	}
+    
+    static void changePassword() {
+    }
 
 }

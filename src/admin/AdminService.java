@@ -680,14 +680,15 @@ public class AdminService implements AdminOperations
 	            System.out.print("Email: ");
 	            String email = sc.nextLine();
 
-	            System.out.print("Password: ");
-	            String password = sc.nextLine();
+	            String password=contact;
 
 	            System.out.print("Class Name: ");
 	            String className = sc.nextLine();
 
 	            System.out.print("Semester: ");
 	            int sem = sc.nextInt();
+	            
+	            System.out.println("Password is by default set to contact number.");
 
 	            String query = "INSERT INTO Students VALUES (?,?,?,?,?,?,?,?,?,?,?)";
 

@@ -57,14 +57,17 @@ public class MIS {
         int role = sc.nextInt();
         sc.nextLine();
 
-        System.out.print("Enter UserName: ");
-        String email = sc.nextLine();
-
-        System.out.print("Enter Password: ");
-        String password = sc.nextLine();
+        
 
         switch (role) {
             case 1:
+            	System.out.println("On first login ,password is contact no.");
+            	System.out.print("Enter emial id: ");
+                String email = sc.nextLine();
+
+                System.out.print("Enter Password: ");
+                String password = sc.nextLine();
+                
                 Student student = new Student();
                 if (student.login(email, password)) {
                     handleStudentMenu();
@@ -74,8 +77,15 @@ public class MIS {
                 break;
 
             case 2:
+            	
+            	System.out.print("Enter email id: ");
+                String email1 = sc.nextLine();
+
+                System.out.print("Enter Password: ");
+                String password1 = sc.nextLine();
+                
                 Professor professor = new Professor();
-                if (professor.login(email, password)) {
+                if (professor.login(email1, password1)) {
                     handleProfessorMenu();
                 } else {
                     System.out.println("Login failed");
@@ -84,7 +94,14 @@ public class MIS {
 
             case 3:
                 Admin admin = new Admin();
-                if (admin.login(email, password)) {
+                
+                System.out.print("Enter UserName: ");
+                String id = sc.nextLine();
+
+                System.out.print("Enter Password: ");
+                String password11 = sc.nextLine();
+                
+                if (admin.login(id, password11)) {
                     handleAdminMenu();
                 } else {
                     System.out.println("Login failed");
