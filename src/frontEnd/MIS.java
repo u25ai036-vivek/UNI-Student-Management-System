@@ -9,17 +9,8 @@ import proffesor.ProfService;
 import proffesor.Professor;
 import student.StudentService;
 import student.Student;
-//import student.StOperations;
 
-public class MIS {
-	/*public static void main(String[] args)
-	{
-		DBSetup.addDept();
-	}*/
-	
-	 
-	
-	
+public class MIS {	
 
     static StudentService studentService = new StudentService();
     static ProfService professorService = new ProfService();
@@ -66,7 +57,7 @@ public class MIS {
         int role = sc.nextInt();
         sc.nextLine();
 
-        System.out.print("Enter Email: ");
+        System.out.print("Enter UserName: ");
         String email = sc.nextLine();
 
         System.out.print("Enter Password: ");
@@ -106,53 +97,113 @@ public class MIS {
     }
 
 
-    static void handleStudentMenu() {
+    public static void handleStudentMenu() {
 
-//        while (true) {
-//            System.out.println("\n===== Student Menu =====");
-//            System.out.println("1. View Courses");
-//            System.out.println("2. Register Course");
-//            System.out.println("3. Drop Course");
-//            System.out.println("4. View Schedule");
-//            System.out.println("5. View SGPA/CGPA");
-//            System.out.println("6. Submit Complaint");
-//            System.out.println("7. View Complaint Status");
-//            System.out.println("8. Logout");
-//        }
-    }
+        StudentService s = new StudentService();
+        Scanner sc = new Scanner(System.in);
 
-            /*int ch = sc.nextInt();
+        while (true) {
 
-            switch (ch) {
+            System.out.println("\n===== STUDENT MENU =====");
+            System.out.println("1. Course Operations");
+            System.out.println("2. Academic Details");
+            System.out.println("3. Schedule");
+            System.out.println("4. Complaints");
+            System.out.println("0. Logout");
+
+            int choice = sc.nextInt();
+            sc.nextLine();
+
+            switch (choice) {
+
+             
                 case 1:
-                    studentService.showAvailableCourses();
+                    while (true) {
+
+                        System.out.println("\n--- Course Operations ---");
+                        System.out.println("1. View Available Courses");
+                        System.out.println("2. Register Course");
+                        System.out.println("3. Drop Course");
+                        System.out.println("4. View Registered Courses");
+                        System.out.println("0. Back");
+
+                        int c = sc.nextInt();
+                        sc.nextLine();
+
+                        switch (c) {
+                            case 1: s.viewAvailableCourses(); break;
+                            case 2: s.registerCourse(); break;
+                            case 3: s.dropCourse(); break;
+                            case 4: s.viewRegisteredCourses(); break;
+                            case 0: break;
+                            default: System.out.println("Invalid choice");
+                        }
+
+                        if (c == 0) break;
+                    }
                     break;
+
+             
                 case 2:
-                    studentService.enrollInCourse();
+                    while (true) {
+
+                        System.out.println("\n--- Academic Details ---");
+                        System.out.println("1. Track Academic Progress");
+                        System.out.println("2. Check Credit Load");
+                        System.out.println("3. View Completed Courses");
+                        System.out.println("0. Back");
+
+                        int c = sc.nextInt();
+                        sc.nextLine();
+
+                        switch (c) {
+                            case 1: s.trackAcademicProgress(); break;
+                            case 2: s.checkCreditLoad(); break;
+                            case 3: s.viewCompletedCourses(); break;
+                            case 0: break;
+                            default: System.out.println("Invalid choice");
+                        }
+
+                        if (c == 0) break;
+                    }
                     break;
+
                 case 3:
-                    studentService.dropEnrolledCourse();
+                    s.viewSchedule();
                     break;
+
+                
                 case 4:
-                    studentService.buildStudentSchedule();
+                    while (true) {
+
+                        System.out.println("\n--- Complaint Section ---");
+                        System.out.println("1. Submit Complaint");
+                        System.out.println("2. View Complaints");
+                        System.out.println("0. Back");
+
+                        int c = sc.nextInt();
+                        sc.nextLine();
+
+                        switch (c) {
+                            case 1: s.submitComplaint(); break;
+                            case 2: s.viewComplaints(); break;
+                            case 0: break;
+                            default: System.out.println("Invalid choice");
+                        }
+
+                        if (c == 0) break;
+                    }
                     break;
-                case 5:
-                    studentService.computeSGPA();
-                    studentService.computeCGPA();
-                    break;
-                case 6:
-                    studentService.fileComplaint();
-                    break;
-                case 7:
-                    studentService.fetchComplaintStatus();
-                    break;
-                case 8:
+
+                case 0:
+                    System.out.println("Logged out successfully");
                     return;
+
                 default:
                     System.out.println("Invalid choice");
             }
         }
-        */
+    }
 
 
         
@@ -263,7 +314,8 @@ public class MIS {
 	        System.out.println("2. Professor Management");
 	        System.out.println("3. Course Management");
 	        System.out.println("4. Complaint Management");
-	        System.out.println("5. Go Back");
+	        System.out.println("5. Department Setup");
+	        System.out.println("6. Go Back");
 
 	        int ch = sc.nextInt();
 	        sc.nextLine();
@@ -296,12 +348,13 @@ public class MIS {
 	                            AdminOperations.retrieveStudentRecords();
 	                            break;
 	                        case 5:
-	                            break;
+	                        	DBSetup.addDept();
+	                        	break;
 	                        default:
 	                            System.out.println("Invalid choice");
 	                    }
 
-	                    if (s == 5) break;
+	                    if (s == 6) break;
 	                }
 	                break;
 

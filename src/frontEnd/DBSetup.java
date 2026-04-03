@@ -45,7 +45,7 @@ public class DBSetup {
                     ")";
 
             String ddlq2 = "CREATE TABLE IF NOT EXISTS Complaint (" +
-                    "complaint_id VARCHAR(20) ," + "sid VARCHAR(20),"+
+                    "complaint_id int ," + "sid VARCHAR(20),"+
                     "name VARCHAR(25)," +
                     "description TEXT," +
                     "date DATE," +

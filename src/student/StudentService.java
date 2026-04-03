@@ -1,13 +1,15 @@
 package student;
 import java.util.*;
 
+
 import proffesor.Professor;
 
 import java.sql.*;
 import java.sql.Date;
 
 
-public class StudentService implements StOperations {
+public class StudentService implements StOperations
+{
 
 	public static void viewAvailableCourses() {
 		
@@ -534,43 +536,62 @@ public class StudentService implements StOperations {
         String pass = "mayank09";
 		Scanner sc=new Scanner(System.in);
 
-        try {
-            Connection con = DriverManager.getConnection(url, user, pass);
+		try {
+	        Connection con = DriverManager.getConnection(url, user, pass);
 
-            String query =
-                "SELECT code, title, credits, grade, course_regt_date " +
-                "FROM Student_Course WHERE sid=?";
+	        String sid = Student.currentStudentId;
 
-            PreparedStatement ps = con.prepareStatement(query);
-            ps.setString(1, Student.currentStudentId);
+	        String semQuery = "SELECT semster FROM Students WHERE sid=?";
+	        PreparedStatement ps1 = con.prepareStatement(semQuery);
+	        ps1.setString(1, sid);
 
-            ResultSet rs = ps.executeQuery();
+	        ResultSet rs1 = ps1.executeQuery();
 
-            boolean found = false;
+	        if (!rs1.next()) {
+	            System.out.println("Student not found");
+	            return;
+	        }
 
-            System.out.println("\n--- Registered Courses ---");
+	        int sem = rs1.getInt("semster");
 
-            while (rs.next()) {
-                found = true;
+	        String query =
+	            "SELECT sc.code, sc.title, sc.credits, sc.grade, sc.course_regt_date " +
+	            "FROM Student_Course sc " +
+	            "JOIN Courses c ON sc.code = c.course_code " +
+	            "WHERE sc.sid=? AND c.semester=?";
 
-                System.out.println(
-                    rs.getString("code") + " | " +
-                    rs.getString("title") + " | Credits: " +
-                    rs.getInt("credits") + " | Grade: " +
-                    rs.getString("grade") + " | Registered: " +
-                    rs.getDate("course_regt_date")
-                );
-            }
+	        PreparedStatement ps2 = con.prepareStatement(query);
+	        ps2.setString(1, sid);
+	        ps2.setInt(2, sem);
 
-            if (!found) {
-                System.out.println("No courses registered");
-            }
+	        ResultSet rs = ps2.executeQuery();
 
-            con.close();
+	        boolean found = false;
 
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
+	        System.out.println("\n--- Registered Courses (Semester " + sem + ") ---");
+
+	        while (rs.next()) {
+
+	            found = true;
+
+	            System.out.println(
+	                rs.getString("code") + " | " +
+	                rs.getString("title") + " | Credits: " +
+	                rs.getInt("credits") + " | Grade: " +
+	                rs.getString("grade") + " | Registered: " +
+	                rs.getDate("course_regt_date")
+	            );
+	        }
+
+	        if (!found) {
+	            System.out.println("No courses registered in this semester");
+	        }
+
+	        con.close();
+
+	    } catch (Exception e) {
+	        System.out.println(e.getMessage());
+	    }
     }
 
     public static void submitComplaint() {
@@ -580,27 +601,46 @@ public class StudentService implements StOperations {
         String pass = "mayank09";
 		Scanner sc=new Scanner(System.in);
 
-        try {
-            Connection con = DriverManager.getConnection(url, user, pass);
+		try {
+	        Connection con = DriverManager.getConnection(url, user, pass);
 
-            System.out.print("Enter Complaint: ");
-            String desc = sc.nextLine();
+	        String sid = Student.currentStudentId;
 
-            String query = "INSERT INTO Complaint VALUES (NULL, ?, ?, CURDATE(), 'Pending', NULL)";
-            PreparedStatement ps = con.prepareStatement(query);
+	        System.out.print("Enter Complaint Description: ");
+	        String desc = sc.nextLine();
 
-            ps.setString(1, "Student " + Student.currentStudentId);
-            ps.setString(2, desc);
+	
+	        String maxQuery = "SELECT MAX(complaint_id) FROM Complaint";
+	        Statement stmt = con.createStatement();
+	        ResultSet rs = stmt.executeQuery(maxQuery);
 
-            ps.executeUpdate();
+	        int newId = 1;
 
-            System.out.println("Complaint submitted");
+	        if (rs.next()) {
+	            newId = rs.getInt(1) + 1;
+	        }
 
-            con.close();
+	    
+	        String insert =
+	            "INSERT INTO Complaint (complaint_id, sid, name, description, date, status, resolution) " +
+	            "VALUES (?, ?, ?, ?, CURDATE(), 'Pending', NULL)";
 
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
+	        PreparedStatement ps = con.prepareStatement(insert);
+
+	        ps.setInt(1, newId);
+	        ps.setString(2, sid);
+	        ps.setString(3, "Student");
+	        ps.setString(4, desc);
+
+	        ps.executeUpdate();
+
+	        System.out.println("Complaint submitted successfully. ID: " + newId);
+
+	        con.close();
+
+	    } catch (Exception e) {
+	        System.out.println(e.getMessage());
+	    }
     }
 
     public static void viewComplaints() {
@@ -610,29 +650,46 @@ public class StudentService implements StOperations {
         String pass = "mayank09";
 		Scanner sc=new Scanner(System.in);
 		
-        try {
-            Connection con = DriverManager.getConnection(url, user, pass);
+		try {
+	        Connection con = DriverManager.getConnection(url, user, pass);
 
-            String query = "SELECT * FROM Complaint WHERE name=?";
-            PreparedStatement ps = con.prepareStatement(query);
+	        String sid = Student.currentStudentId;
 
-            ps.setString(1, "Student " + Student.currentStudentId);
+	        String query = "SELECT * FROM Complaint WHERE sid=?";
 
-            ResultSet rs = ps.executeQuery();
+	        PreparedStatement ps = con.prepareStatement(query);
+	        ps.setString(1, sid);
 
-            while (rs.next()) {
-                System.out.println(
-                    rs.getInt("id") + " | " +
-                    rs.getString("description") + " | " +
-                    rs.getString("status")
-                );
-            }
+	        ResultSet rs = ps.executeQuery();
 
-            con.close();
+	        boolean found = false;
 
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
+	        System.out.println("\n--- Your Complaints ---\n");
+
+	        while (rs.next()) {
+
+	            found = true;
+
+	            System.out.println("Complaint ID: " + rs.getInt("complaint_id"));
+	            System.out.println("SID: " + rs.getString("sid"));
+	            System.out.println("Name: " + rs.getString("name"));
+	            System.out.println("Description: " + rs.getString("description"));
+	            System.out.println("Date: " + rs.getDate("date"));
+	            System.out.println("Status: " + rs.getString("status"));
+	            System.out.println("Resolution: " + rs.getString("resolution"));
+
+	            System.out.println("----------------------------------------");
+	        }
+
+	        if (!found) {
+	            System.out.println("No complaints found");
+	        }
+
+	        con.close();
+
+	    } catch (Exception e) {
+	        System.out.println(e.getMessage());
+	    }
     }
     
     public static void checkCreditLoad() {
@@ -642,35 +699,43 @@ public class StudentService implements StOperations {
         String pass = "mayank09";
 		Scanner sc=new Scanner(System.in);
 		
-        try {
-            Connection con = DriverManager.getConnection(url, user, pass);
+		try {
+	        Connection con = DriverManager.getConnection(url, user, pass);
 
-            String query = "SELECT SUM(credits) FROM Student_Course WHERE sid=?";
-            PreparedStatement ps = con.prepareStatement(query);
+	        String sid = Student.currentStudentId;
 
-            ps.setString(1, Student.currentStudentId);
+	        String query = "SELECT sem_credit FROM Students WHERE sid=?";
+	        PreparedStatement ps = con.prepareStatement(query);
+	        ps.setString(1, sid);
 
-            ResultSet rs = ps.executeQuery();
+	        ResultSet rs = ps.executeQuery();
 
-            rs.next();
+	        if (!rs.next()) {
+	            System.out.println("Student not found");
+	            return;
+	        }
 
-            int total = rs.getInt(1);
+	        int semCredit = rs.getInt("sem_credit");
 
-            System.out.println("Total Registered Credits: " + total);
+	        System.out.println("\n--- Credit Load Status ---");
+	        System.out.println("Current Semester Credits: " + semCredit + " / 20");
 
-            if (total > 20) {
-                System.out.println("Warning: Credit limit exceeded");
-            } else if (total == 20) {
-                System.out.println("Maximum credit limit reached");
-            } else {
-                System.out.println("You can register more courses");
-            }
+	        if (semCredit < 20) {
+	        	System.out.println("Remaining Credits: " + (20 - semCredit));
+	            System.out.println("You can register more courses");
+	        } 
+	        else if (semCredit == 20) {
+	            System.out.println("Credit limit reached");
+	        } 
+	        else {
+	            System.out.println("Credit limit exceeded (Not Allowed)");
+	        }
 
-            con.close();
+	        con.close();
 
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
+	    } catch (Exception e) {
+	        System.out.println(e.getMessage());
+	    }
     }
     
     public static void viewCompletedCourses() {
